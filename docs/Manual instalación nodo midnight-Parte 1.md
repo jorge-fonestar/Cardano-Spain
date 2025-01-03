@@ -1,22 +1,18 @@
-# INSTALACIÓN DEL NODO BLOCK PRODUCER EN LA RED DE CARDANO
+# PARTE 1 - INSTALACIÓN DEL NODO BLOCK PRODUCER EN LA RED DE CARDANO
 
 #### Disclaimer
 
 Esta guía es tal cual, no pretende ser un proceso infalible, lo que  funcione en mi sistema puede que no funcione en el tuyo. Úsala bajo tu responsabilidad.
 
-
-
-
-
 Fuentes:
 
 - [Handbook | cardano course](https://cardano-course.gitbook.io/cardano-course/handbook)
 
-- cardano-node-wiki/docs/getting-started/install.md at main · input-output-hk/cardano-node-wiki · GitHub
+- cardano-node-wiki: [cardano-node-wiki/docs/getting-started/install.md at main · input-output-hk/cardano-node-wiki · GitHub](https://github.com/input-output-hk/cardano-node-wiki/blob/main/docs/getting-started/install.md)
 
-- URL releases: Releases · IntersectMBO/cardano-node · GitHub
+- URL releases: [Releases · IntersectMBO/cardano-node · GitHub](https://github.com/IntersectMBO/cardano-node/releases)
 
-Guia de instalación:
+Guía de instalación:
 
 - **guild-operators** https://cardano-community.github.io/guild-operators/
 
@@ -134,11 +130,9 @@ cardano-cli conway address key-gen
 ```
 
 ```tex
--rw------- 1 sergi sergi  180 dic 25 11:21 payment.skey
--rw------- 1 sergi sergi  190 dic 25 11:21 payment.vkey
+-rw------- 1 sxxxx sxxxx  180 dic 25 11:21 payment.skey
+-rw------- 1 sxxxx sxxxx  190 dic 25 11:21 payment.vkey
 ```
-
-
 
 2. ###### Crear llaves para el stake
 
@@ -149,8 +143,8 @@ cardano-cli conway address key-gen \
 ```
 
 ```tex
--rw------- 1 sergi sergi  180 dic 25 11:54 stake.skey
--rw------- 1 sergi sergi  190 dic 25 11:54 stake.vkey
+-rw------- 1 sxxxx sxxxx  180 dic 25 11:54 stake.skey
+-rw------- 1 sxxxx sxxxx  190 dic 25 11:54 stake.vkey
 ```
 
 3. Creando la dirección de stake
@@ -160,7 +154,7 @@ cardano-cli conway stake-address build --staking-verification-key-file stake.vke
 ```
 
 ```tex
--rw------- 1 sergi sergi   64 dic 29 18:14 stake.addr
+-rw------- 1 sxxxx sxxxx   64 dic 29 18:14 stake.addr
 stake_test1urduhqhzr4kkwk8wgh9t58leyeuph9qqfkq3cryrwxjpjaq4v6y4c
 ```
 
@@ -174,7 +168,7 @@ cardano-cli conway address build \
 ```
 
 ```tex
--rw------- 1 sergi sergi   63 dic 25 11:56 payment.addr
+-rw------- 1 sxxxx sxxxx   63 dic 25 11:56 payment.addr
 addr_test1qrqu02xjrexw5x7vynjw7zw3fhv0pwhrj0jqkwgxfn7v0xkmewpwy8tdvavwu3w2hg0ljfncrw2qqnvprsxgxudyr96qm3s5h3
 ```
 
@@ -219,7 +213,7 @@ cardano-cli conway stake-address registration-certificate    --stake-verificatio
 ```
 
 ```tex
-rw------- 1 sergi sergi   194 dic 31 08:43  stake.cert
+rw------- 1 sxxxx sxxxx   194 dic 31 08:43  stake.cert
 ```
 
 7. ###### Registro de la dirección de stake
@@ -230,7 +224,11 @@ rw------- 1 sergi sergi   194 dic 31 08:43  stake.cert
    expr 10000000000 - 179552 - 2000000
    9997820448
    
-   cardano-cli conway transaction build-raw --tx-in 7e0c0c05bf4603dca047b9c7f78d6d30883ece529e2e520cb21ed2e45da78bde#0 --tx-out addr_test1qrqu02xjrexw5x7vynjw7zw3fhv0pwhrj0jqkwgxfn7v0xkmewpwy8tdvavwu3w2hg0ljfncrw2qqnvprsxgxudyr96qm3s5h3+9997820448 --fee 179552 --certificate-file stake.cert --out-file tx.raw
+   cardano-cli conway transaction build-raw --tx-in 7e0c0c05bf4603dca047b9c7f78d6d30883ece529e2e520cb21ed2e45da78bde#0 \
+     --tx-out addr_test1qrqu02xjrexw5x7vynjw7zw3fhv0pwhrj0jqkwgxfn7v0xkmewpwy8tdvavwu3w2hg0ljfncrw2qqnvprsxgxudyr96qm3s5h3+9997820448 \
+     --fee 179552 \
+     --certificate-file stake.cert \
+     --out-file tx.raw
    ```
    
    Firmar transacción
@@ -258,28 +256,28 @@ rw------- 1 sergi sergi   194 dic 31 08:43  stake.cert
 
 ```bash
 cardano-cli conway node key-gen-KES \
-	--verification-key-file BP.kes.vkey \
-	--signing-key-file BP.kes.skey
+    --verification-key-file BP.kes.vkey \
+    --signing-key-file BP.kes.skey
 ```
 
 ```tex
--rwx------ 1 sergi sergi 1327 dic 25 12:04 BP.kes.skey*
--rw------- 1 sergi sergi  183 dic 25 12:04 BP.kes.vkey
+-rwx------ 1 sxxxx sxxxx 1327 dic 25 12:04 BP.kes.skey*
+-rw------- 1 sxxxx sxxxx  183 dic 25 12:04 BP.kes.vkey
 ```
 
 9. Crear llaves cold y Kes.counter
 
 ```bash
 cardano-cli conway node key-gen \
-	--cold-verification-key-file BP.cold.vkey \
-	--cold-signing-key-file BP.cold.skey \
-	--operational-certificate-issue-counter-file BP.counter
+    --cold-verification-key-file BP.cold.vkey \
+    --cold-signing-key-file BP.cold.skey \
+    --operational-certificate-issue-counter-file BP.counter
 ```
 
 ```tex
--rw------- 1 sergi sergi  187 dic 31 09:33 BP.cold.skey
--rw------- 1 sergi sergi  197 dic 31 09:33 BP.cold.vkey
--rw------- 1 sergi sergi  203 dic 31 09:33 BP.counter
+-rw------- 1 sxxxx sxxxx  187 dic 31 09:33 BP.cold.skey
+-rw------- 1 sxxxx sxxxx  197 dic 31 09:33 BP.cold.vkey
+-rw------- 1 sxxxx sxxxx  203 dic 31 09:33 BP.counter
 ```
 
 10. Consultar datos para el certificado
@@ -297,15 +295,15 @@ cardano-cli conway node key-gen \
     
     ```bash
     cardano-cli conway node issue-op-cert \
-    	--kes-verification-key-file BP.kes.vkey \
-    	--cold-signing-key-file BP.cold.skey \
-    	--operational-certificate-issue-counter BP.counter \
-    	--kes-period 532 \
-    	--out-file BP.node.opcert
+        --kes-verification-key-file BP.kes.vkey \
+        --cold-signing-key-file BP.cold.skey \
+        --operational-certificate-issue-counter BP.counter \
+        --kes-period 532 \
+        --out-file BP.node.opcert
     ```
     
     ```tex
-    -rw------- 1 sergi sergi  367 dic 31 09:57 BP.node.opcert
+    -rw------- 1 sxxxx sxxxx  367 dic 31 09:57 BP.node.opcert
     ```
 
 12. Crear llavers VRF
@@ -316,8 +314,8 @@ cardano-cli node key-gen-VRF \
     --signing-key-file BP.vrf.skey
 
 chmod 400 BP.vrf.skey
--r-------- 1 sergi sergi  230 dic 31 09:36 BP.vrf.skey
--rw------- 1 sergi sergi  176 dic 31 09:36 BP.vrf.vkey
+-r-------- 1 sxxxx sxxxx  230 dic 31 09:36 BP.vrf.skey
+-rw------- 1 sxxxx sxxxx  176 dic 31 09:36 BP.vrf.vkey
 ```
 
 Modificar los fichero a Solo Lectura
@@ -334,7 +332,7 @@ chmod -R 400 BP.node.opcert
     ```bash
     cardano-cli conway stake-pool id --cold-verification-key-file BP.cold.vkey --out-file stakepoolid.txt
     
-    -rw------- 1 sergi sergi   56 dic 31 09:43 stakepoolid.txt
+    -rw------- 1 sxxxx sxxxx   56 dic 31 09:43 stakepoolid.txt
     pool1q4h9ed20wv8549dw5yvr3xw5ll5fg0v72s998nyjs6uc6dark6l
     ```
     
@@ -355,8 +353,6 @@ chmod -R 400 BP.node.opcert
         }
     }
     ```
-
-
 
 #### 8 Crear un servicio para ejecuta el nodo
 
@@ -384,7 +380,7 @@ cd $CNODE_HOME/scripts
 ./gLiveView.sh
 ```
 
-![](/home/sergi/snap/marktext/9/.config/marktext/images/2024-12-25-10-57-51-image.png)
+
 
 #### 10 Convertir el nodo Relay en Block Producer
 
@@ -421,8 +417,6 @@ sudo systemctl restart cnode.service
 Se puede comprobar que el tipo de nodo ya es Core
 
 Y que la información del periodo de renovación de las llaves KES se muestra.
-
-![](/home/sergi/snap/marktext/9/.config/marktext/images/2024-12-31-10-18-01-image.png)
 
 
 
