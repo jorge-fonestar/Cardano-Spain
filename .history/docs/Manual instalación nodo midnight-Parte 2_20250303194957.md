@@ -1,7 +1,6 @@
 # PARTE 2 - INSTALACIÓN DEL NODO MIDNIGTH EN LA RED DE TEST
 
 version 1
-
 updated 2025/03/03
 
 #### Disclaimer

@@ -1,12 +1,8 @@
 # PARTE 1 - INSTALACIÓN DEL NODO BLOCK PRODUCER EN LA RED DE CARDANO
 
-version 1
-
-updated 2025/03/03
-
 #### Disclaimer
 
-Esta guía es tal cual, no pretende ser un proceso infalible, lo que funcione en mi sistema puede que no funcione en el tuyo. Úsala bajo tu responsabilidad.
+Esta guía es tal cual, no pretende ser un proceso infalible, lo que  funcione en mi sistema puede que no funcione en el tuyo. Úsala bajo tu responsabilidad.
 
 Fuentes:
 
@@ -93,14 +89,14 @@ Resultado
 
 ```json
 {
-  "block": 271042,
-  "epoch": 65,
-  "era": "Babbage",
-  "hash": "2f9d1067cfcd5929bc430bb84c42325e740124f7a08383994c200398bff68b71",
-  "slot": 5652856,
-  "slotInEpoch": 36856,
-  "slotsToEpochEnd": 49544,
-  "syncProgress": "8.26"
+    "block": 271042,
+    "epoch": 65,
+    "era": "Babbage",
+    "hash": "2f9d1067cfcd5929bc430bb84c42325e740124f7a08383994c200398bff68b71",
+    "slot": 5652856,
+    "slotInEpoch": 36856,
+    "slotsToEpochEnd": 49544,
+    "syncProgress": "8.26"
 }
 ```
 
@@ -128,8 +124,8 @@ En un equipo desconectado y en un directorio propio.
 1. ##### Crear llaves de pago para el nodo
 
 ```bash
-cardano-cli conway address key-gen
---verification-key-file payment.vkey
+cardano-cli conway address key-gen     
+--verification-key-file payment.vkey    
 --signing-key-file payment.skey
 ```
 
@@ -202,12 +198,12 @@ TxHash: **7e0c0c05bf4603dca047b9c7f78d6d30883ece529e2e520cb21ed2e45da78bde**
 ```
 
 6. ###### Crear el certificado del stake
-
+   
    Primero consultar el coste del registro
-
+   
    ```bash
    cardano-cli conway query protocol-parameters --testnet-magic 2 --out-file protocol.json
-
+   
    cat protocol.json | jq .stakeAddressDeposit
    2000000
    ```
@@ -221,22 +217,22 @@ rw------- 1 sxxxx sxxxx   194 dic 31 08:43  stake.cert
 ```
 
 7. ###### Registro de la dirección de stake
-
+   
    Crear una transacción
-
+   
    ```bash
    expr 10000000000 - 179552 - 2000000
    9997820448
-
+   
    cardano-cli conway transaction build-raw --tx-in 7e0c0c05bf4603dca047b9c7f78d6d30883ece529e2e520cb21ed2e45da78bde#0 \
      --tx-out addr_test1qrqu02xjrexw5x7vynjw7zw3fhv0pwhrj0jqkwgxfn7v0xkmewpwy8tdvavwu3w2hg0ljfncrw2qqnvprsxgxudyr96qm3s5h3+9997820448 \
      --fee 179552 \
      --certificate-file stake.cert \
      --out-file tx.raw
    ```
-
+   
    Firmar transacción
-
+   
    ```bash
    cardano-cli conway transaction sign \
      --tx-body-file tx.raw \
@@ -245,14 +241,14 @@ rw------- 1 sxxxx sxxxx   194 dic 31 08:43  stake.cert
      --testnet-magic 2 \
      --out-file tx.signed
    ```
-
+   
    Enviar transacción
-
+   
    ```bash
    cardano-cli conway transaction submit \
      --tx-file tx.signed \
      --testnet-magic 2
-
+   
    Transaction successfully submitted.
    ```
 
@@ -285,7 +281,7 @@ cardano-cli conway node key-gen \
 ```
 
 10. Consultar datos para el certificado
-
+    
     ```bash
     cardano-cli conway query tip --testnet-magic 2 | jq .slot
     68978879
@@ -296,7 +292,7 @@ cardano-cli conway node key-gen \
     ```
 
 11. Crear el certificado
-
+    
     ```bash
     cardano-cli conway node issue-op-cert \
         --kes-verification-key-file BP.kes.vkey \
@@ -305,7 +301,7 @@ cardano-cli conway node key-gen \
         --kes-period 532 \
         --out-file BP.node.opcert
     ```
-
+    
     ```tex
     -rw------- 1 sxxxx sxxxx  367 dic 31 09:57 BP.node.opcert
     ```
@@ -332,16 +328,16 @@ chmod -R 400 BP.node.opcert
 ```
 
 13. Revisar el ID del stakepool
-
+    
     ```bash
     cardano-cli conway stake-pool id --cold-verification-key-file BP.cold.vkey --out-file stakepoolid.txt
-
+    
     -rw------- 1 sxxxx sxxxx   56 dic 31 09:43 stakepoolid.txt
     pool1q4h9ed20wv8549dw5yvr3xw5ll5fg0v72s998nyjs6uc6dark6l
     ```
-
+    
     ```bash
-    cardano-cli conway query stake-snapshot --stake-pool-id $(cat stakepoolid.txt) --testnet-magic 2
+    cardano-cli conway query stake-snapshot --stake-pool-id $(cat stakepoolid.txt) --testnet-magic 2 
     {
         "pools": {
             "056e5cb54f730f4a95aea1183899d4ffe8943d9e540a53cc9286b98d": {
@@ -384,6 +380,8 @@ cd $CNODE_HOME/scripts
 ./gLiveView.sh
 ```
 
+
+
 #### 10 Convertir el nodo Relay en Block Producer
 
 Fuente: https://developers.cardano.org/docs/operate-a-stake-pool/block-producer-keys/
@@ -399,11 +397,11 @@ cp  $HOME/cardano-testnet/keys/BP.node.opcert $CNODE_HOME/priv/pool/MIDBP/node.c
 Cambiar nombres en el fichero .env
 
 ```bash
-gedit $CNODE_HOME/scripts/env
+gedit $CNODE_HOME/scripts/env 
 
-WALLET_FOLDER="${CNODE_HOME}/priv/wallet"
-POOL_FOLDER="${CNODE_HOME}/priv/pool"
-POOL_NAME="MIDBP"
+WALLET_FOLDER="${CNODE_HOME}/priv/wallet"              
+POOL_FOLDER="${CNODE_HOME}/priv/pool"                                                                         
+POOL_NAME="MIDBP"            
 
 POOL_HOTKEY_SK_FILENAME="kes.skey"
 POOL_OPCERT_FILENAME="node.cert"
@@ -420,158 +418,11 @@ Se puede comprobar que el tipo de nodo ya es Core
 
 Y que la información del periodo de renovación de las llaves KES se muestra.
 
+
+
 #### 11 Registrar el stake
 
 Fuente: https://developers.cardano.org/docs/operate-a-stake-pool/register-stake-address
-
-crear fichero **meta.json**
-
-```json
-{
-  "name": "SERG10 Testnet Pool",
-  "description": "Pool for midnight testnet",
-  "ticker": "SERG1",
-
-  "homepage": "",
-  "extended": ""
-}
-```
-
-Calcular el hash del fichero _meta.json_
-
-```bash
-cardano-cli conway stake-pool metadata-hash --pool-metadata-file meta.json --out-file meta.hash
-```
-
-Crear el certificado de registro del pool
-
-```bash
-cardano-cli conway stake-pool registration-certificate \
-    --cold-verification-key-file KES/BP.cold.vkey \
-    --vrf-verification-key-file KES/BP.vrf.vkey \
-    --pool-pledge 10000000000 \
-    --pool-cost 340000000 \
-    --pool-margin 0.01 \
-    --pool-reward-account-verification-key-file stake.vkey \
-    --pool-owner-stake-verification-key-file stake.vkey \
-    --testnet-magic 2 \
-    --metadata-url https://github.com/xxxxxxx/blob/main/data.json \
-    --metadata-hash $(cat meta.hash) \
-    --out-file pool-registration.cert
-```
-
-Crear el certificado de delegación
-
-```bash
-cardano-cli conway stake-address stake-delegation-certificate        --stake-verification-key-file stake.vkey      --cold-verification-key-file KES/BP.cold.vkey         --out-file pool-delegation.cert
-```
-
-Crear la transacción para el regitros
-
-```bash
-cardano-cli conway transaction build-raw \
-    --tx-in b728412717a92be4c88ef729bc798e36904def66f25720354122dedeaf7bf4c8#0 \
-    --tx-out $(cat payment.addr)+499811751 \
-    --fee 0 \
-    --out-file KES/regpool.draft \
-    --certificate-file pool-registration.cert \
-    --certificate-file pool-delegation.cert
-```
-
-Calcular los fees
-
-```bash
-cardano-cli conway transaction calculate-min-fee \
-    --tx-body-file KES/regpool.draft \
-    --tx-in-count 1 \
-    --tx-out-count 1 \
-    --testnet-magic 2 \
-    --witness-count 3 \
-    --byron-witness-count 0 \
-    --protocol-params-file protocol.json
-
-187897 Lovelace
- Error en el calcualo el fee correcto es 188073
-```
-
-Operaciones
-
-```bash
-cat protocol.json | jq .stakePoolDeposit
-500000000
-
-expr 10000000000 - 188073 - 500000000
-9499811927
-```
-
-Montar transacción final
-
-```bash
-cardano-cli conway transaction build-raw \
-    --tx-in b728412717a92be4c88ef729bc798e36904def66f25720354122dedeaf7bf4c8#0 \
-    --tx-out $(cat payment.addr)+9499811927 \
-    --fee 188073 \
-    --out-file KES/regpool.raw \
-    --certificate-file pool-registration.cert \
-    --certificate-file pool-delegation.cert
-```
-
-```bash
---change-address $(< payment.addr) \
-```
-
-Firmar la transacción
-
-```bash
-cardano-cli conway transaction sign \
-    --tx-body-file KES/regpool.raw \
-    --signing-key-file payment.skey \
-    --signing-key-file stake.skey \
-    --signing-key-file KES/BP.cold.skey \
-    --testnet-magic 2 \
-    --out-file KES/regpool.signed
-```
-
-Enviar la transacción
-
-```bash
-cardano-cli conway transaction submit \
-    --tx-file KES/regpool.signed \
-    --testnet-magic 2
-```
-
-Transaction successfully submitted.
-
-Consultar el ID del pool
-
-```bash
-cardano-cli conway stake-pool id \
-  --output-format hex \
-  --stake-pool-verification-key-file KES/BP.cold.vkey \
---out-file KES/poolid.hex
-
-056e5cb54f730f4a95aea1183899d4ffe8943d9e540a53cc9286b98d
-```
-
-```bash
-cardano-cli conway stake-pool id \
---stake-pool-verification-key-file KES/BP.cold.vkey \
---out-file KES/poolid.id
-
-pool1q4h9ed20wv8549dw5yvr3xw5ll5fg0v72s998nyjs6uc6dark6l
-```
-
-Comprobar el registro
-
-En cardanoscan:
-
-https://preview.cardanoscan.io/pool/056e5cb54f730f4a95aea1183899d4ffe8943d9e540a53cc9286b98d
-
-```bash
-cardano-cli conway query ledger-state --testnet-magic 2 \
-  | grep publicKey \
-  | grep $(cat KES/poolid.hex)
-```
 
 #### 12 Registrar el pool
 

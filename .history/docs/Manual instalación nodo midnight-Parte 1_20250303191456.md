@@ -1,9 +1,5 @@
 # PARTE 1 - INSTALACIÓN DEL NODO BLOCK PRODUCER EN LA RED DE CARDANO
 
-version 1
-
-updated 2025/03/03
-
 #### Disclaimer
 
 Esta guía es tal cual, no pretende ser un proceso infalible, lo que funcione en mi sistema puede que no funcione en el tuyo. Úsala bajo tu responsabilidad.
